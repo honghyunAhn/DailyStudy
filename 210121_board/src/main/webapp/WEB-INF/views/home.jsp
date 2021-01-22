@@ -5,10 +5,11 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>
-	Hello world!  안녕하세요
-</h1>
-
-<P>  The time on the server is ${serverTime}. </P>
+<h1>SpringWeb5 -SE Bank Step 4</h1>
+<ul>
+	<li><a href="member/join">회원가입</a></li>
+	<li><a href="member/login">로그인</a></li>
+	<li><a href="member/login">게시판</a></li>
+</ul>
 </body>
 </html>
