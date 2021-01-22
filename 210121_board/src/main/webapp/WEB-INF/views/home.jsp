@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-	<title>Home</title>
+	<title>Board_Home</title>
 </head>
 <body>
 <h1>SpringWeb5 -SE Bank Step 4</h1>
