@@ -6,13 +6,51 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../resources/css/default.css" />
+<script type="text/javascript">
+function formCheck(){
+	var id = document.getElementById('id');
+	var pw = document.getElementById('password');
+	var pw2 = document.getElementById('password2');
+	var name = document.getElementById('name');
+	
+	if(id.value.length < 3 || id.value.length > 10){
+		alert("ID는 3~10자로 입력하세요.");
+		id.focus();
+		id.select();
+		return false;
+	}
+	if(pw.value.length < 3 || pw.value.length > 10){
+		alert("비밀번호는 3~10자로 입력하세요.");
+		id.focus();
+		id.select();
+		return false;
+	}
+	if(pw.value != pw2.value){
+		alert("비밀번호를 정확하게 입력하세요.");
+		id.focus();
+		id.select();
+		return false;
+	}
+	if(name.value == ''){
+		alert("이름을 입력하세요.");
+		id.focus();
+		id.select();
+		return false;
+	}
+	return true;
+}
+
+function idcheckOpen(){
+	var w = window.open('idcheck', 'idwin', 'top=200, left=500, width=400, height=300');
+}
+</script>
 
 <title>Borad_Join</title>
 </head>
 <body>
 	<div class="centerdiv">
 		<h1>[ 회원 가입 ]</h1>
-		<form id="joinform" action="join" method="post">
+		<form id="joinform" action="join" method="post" onsubmit="return formCheck();">
 			<table>
 				<tr>
 					<th>ID</th>
