@@ -72,7 +72,23 @@ public class MemberController {
 		return "redirect:/";
 	}
 	@RequestMapping(value="update", method=RequestMethod.GET)
-	public String update() {
+	public String update(Model model, HttpSession session) {
+		String id = (String) session.getAttribute("loginId");
+		MemberVO member = dao.getMember(id);
+		model.addAttribute("member",member);
 		return "memberView/update";
+	}
+	@RequestMapping(value="update", method=RequestMethod.POST)
+	public String update(Model model, HttpSession session, MemberVO member) {
+		String id = (String) session.getAttribute("loginId");
+		member.setId(id);
+		
+		int result = dao.updateMember(member);
+		if(result != 0) {
+			return "redirect:/";
+		}
+		else {
+			return "memberView/update";
+		}
 	}
 }

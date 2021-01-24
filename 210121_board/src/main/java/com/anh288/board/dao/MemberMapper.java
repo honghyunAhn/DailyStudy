@@ -8,4 +8,6 @@ public interface MemberMapper {
 
 	public MemberVO getMember(String searchId);
 
+	public int updateMember(MemberVO member);
+
 }

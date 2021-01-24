@@ -15,4 +15,18 @@
 		from web5_member
 		where id = #{searchId}
 	</select>
+	
+	<update id="updateMember" parameterType="member">
+		update
+			web5_member
+		set
+			password = #{password}
+			, name = #{name}
+			, phone = #{phone}
+			, address = #{address}
+			, email = #{email}
+		where
+			id = #{id}
+	</update>
+
 </mapper>

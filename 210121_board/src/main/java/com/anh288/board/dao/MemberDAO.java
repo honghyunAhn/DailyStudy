@@ -36,4 +36,16 @@ public class MemberDAO {
 		}
 		return member;
 	}
+
+	public int updateMember(MemberVO member) {
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		int result = 0;
+		
+		try {
+			result = mapper.updateMember(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
