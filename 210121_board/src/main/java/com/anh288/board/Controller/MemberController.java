@@ -1,5 +1,7 @@
 package com.anh288.board.Controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +19,7 @@ public class MemberController {
 	MemberDAO dao;
 	
 	@RequestMapping(value="join", method=RequestMethod.GET)
-	public String joinForm(Model model) {
+	public String joinForm() {
 		return "memberView/joinForm";
 	}
 	
@@ -31,7 +33,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="idcheck", method=RequestMethod.GET)
-	public String idCheck(Model model) {
+	public String idCheck() {
 		return "memberView/idCheck";
 	}
 	
@@ -42,5 +44,35 @@ public class MemberController {
 		model.addAttribute("searchId", searchId);
 		
 		return "memberView/idCheck";
+	}
+	
+	@RequestMapping(value="login", method=RequestMethod.GET)
+	public String login() {
+		return "memberView/login";
+	}
+	
+	@RequestMapping(value="login", method=RequestMethod.POST)
+	public String login(Model model, HttpSession session, String id, String pw) {
+		MemberVO member = dao.getMember(id);
+		
+		if(member != null && member.getPassword().equals(pw)) {
+			session.setAttribute("loginId", member.getId());
+			session.setAttribute("loginName", member.getName());
+			return "redirect:/";
+		}
+		else{
+			model.addAttribute("errorMsg", "ID 또는 비밀번호가 틀립니다.");
+			return "memberView/login";
+		}
+	}
+	@RequestMapping(value="logout", method=RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.removeAttribute("loginId");
+		session.removeAttribute("loginName");
+		return "redirect:/";
+	}
+	@RequestMapping(value="update", method=RequestMethod.GET)
+	public String update() {
+		return "memberView/update";
 	}
 }
