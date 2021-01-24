@@ -24,4 +24,16 @@ public class MemberDAO {
 		}
 		return result;
 	}
+
+	public MemberVO getMember(String searchId) {
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		MemberVO member = null;
+		
+		try {
+			member = mapper.getMember(searchId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return member;
+	}
 }

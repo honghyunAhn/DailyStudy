@@ -6,4 +6,6 @@ public interface MemberMapper {
 
 	public int insertMember(MemberVO member);
 
+	public MemberVO getMember(String searchId);
+
 }

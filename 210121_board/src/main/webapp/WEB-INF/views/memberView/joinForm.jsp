@@ -55,7 +55,7 @@ function idcheckOpen(){
 				<tr>
 					<th>ID</th>
 					<td>
-						<input type="text" name="id" id="id" maxlength="10" placeholder="ID중복확인 이용" value="${member.id}">
+						<input type="text" name="id" id="id" maxlength="10" placeholder="ID중복확인 이용" readonly="readonly" value="${member.id}">
 						<input type="button" value="ID중복확인" onclick="idcheckOpen()">
 					</td>
 				</tr>

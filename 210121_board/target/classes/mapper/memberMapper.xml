@@ -10,4 +10,9 @@
 			(#{id}, #{password}, #{name}, #{phone}, #{address}, #{email})
 	</insert>
 
+	<select id="getMember" parameterType="String" resultType="member">
+		select *
+		from web5_member
+		where id = #{searchId}
+	</select>
 </mapper>

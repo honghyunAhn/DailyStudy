@@ -29,4 +29,18 @@ public class MemberController {
 		}
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value="idcheck", method=RequestMethod.GET)
+	public String idCheck(Model model) {
+		return "memberView/idCheck";
+	}
+	
+	@RequestMapping(value="idcheck", method=RequestMethod.POST)
+	public String idCheck(Model model, String searchId) {
+		MemberVO member = dao.getMember(searchId);
+		model.addAttribute("member", member);
+		model.addAttribute("searchId", searchId);
+		
+		return "memberView/idCheck";
+	}
 }
