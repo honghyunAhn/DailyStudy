@@ -31,7 +31,7 @@
 <body>
 	<div class="centerdiv">
 		<h1>[ 글쓰기 ]</h1>
-		<form id="writeform" action="write"  method="post" onsubmit="return formCheck();">
+		<form id="writeform" action="write" enctype="multipart/form-data" method="post" onsubmit="return formCheck();">
 			<table>
 				<tr>
 					<th>제목</th>

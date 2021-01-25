@@ -10,4 +10,6 @@ public interface BoardMapper {
 
 	public int countBoard();
 
+	public void insertBoard(BoardVO board);
+
 }

@@ -35,4 +35,14 @@ public class BoardDAO {
 		}
 		return res;
 	}
+
+	public void insertBoard(BoardVO board) {
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		try {
+			mapper.insertBoard(board);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

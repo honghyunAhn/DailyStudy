@@ -20,7 +20,9 @@
 				</td>
 				<td class="white" colspan="3"></td>
 				<td class="white">
+					<c:if test="${loginId != null}">
 					<input type="button" value="글쓰기" onClick="location.href='write';">
+					</c:if>
 				</td>
 				
 			</tr>

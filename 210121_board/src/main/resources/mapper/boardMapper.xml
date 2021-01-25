@@ -10,4 +10,30 @@
 		select count(*)
 		from web5_board
 	</select>
+	
+	<insert id="insertBoard" parameterType="board">
+		insert into
+			web5_board
+		(
+			boardnum,
+			id,
+			title,
+			contents
+			<if test="originalfile != null and savedfiles != null">
+			, originalfile
+			, savedfile
+			</if>		
+		)
+		values
+		(
+			web5_board_seq.nextval,
+			#{id},
+			#{title},
+			#{contents}
+			<if test="originalfile != null and savedfiles != null">
+			, #{originalfile}
+			, #{savedfiles}
+			</if>
+		)
+	</insert>
 </mapper>
