@@ -4,8 +4,10 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.anh288.board.vo.MemberVO" alias="member"/>
+		<typeAlias type="com.anh288.board.vo.BoardVO" alias="board" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />
+		<mapper resource="mapper/boardMapper.xml" />
 	</mappers>
 </configuration>
