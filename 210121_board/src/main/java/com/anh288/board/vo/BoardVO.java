@@ -6,8 +6,9 @@ import lombok.Data;
 public class BoardVO {
 	private int boardnum;
 	private String id;
+	private String title;
 	private String contents;
-	private String inputedate;
+	private String inputdate;
 	private int hits;
 	private String originalfile;
 	private String savedfiles;

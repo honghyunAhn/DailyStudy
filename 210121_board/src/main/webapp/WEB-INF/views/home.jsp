@@ -16,7 +16,7 @@
 	<li><a href="member/logout">로그아웃</a></li>
 	<li><a href="member/update">개인정보 수정</a></li>
 </c:if>
-	<li><a href="member/login">게시판</a></li>
+	<li><a href="board/list">게시판</a></li>
 </ul>
 </body>
 </html>

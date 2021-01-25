@@ -1,12 +1,38 @@
 package com.anh288.board.dao;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.anh288.board.vo.BoardVO;
 
 @Repository
 public class BoardDAO {
 
 	@Autowired
-	SqlSession session;
+	SqlSession sqlSession;
+
+	public ArrayList<BoardVO> listBoard() {
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		ArrayList<BoardVO> list = null;
+		try {
+			list = mapper.boardlist();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public int countlist() {
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		int res = 0;
+		try {
+			res = mapper.countBoard();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
 }
