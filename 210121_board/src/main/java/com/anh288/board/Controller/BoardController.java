@@ -51,4 +51,12 @@ public class BoardController {
 		dao.insertBoard(board);
 		return "redirect:list";
 	}
+	
+	@RequestMapping(value="read", method=RequestMethod.GET)
+	public String boardRead(int boardnum, Model model) {
+		BoardVO board = dao.getBoard(boardnum);
+		System.out.println(board);
+		model.addAttribute("board", board);
+		return "boardView/boardRead";
+	}
 }

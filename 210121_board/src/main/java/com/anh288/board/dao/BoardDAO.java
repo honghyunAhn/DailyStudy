@@ -45,4 +45,16 @@ public class BoardDAO {
 		}
 		
 	}
+
+	public BoardVO getBoard(int boardnum) {
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		BoardVO board = null;
+		try {
+			mapper.hitBoard(boardnum);
+			board = mapper.getBaord(boardnum);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return board;
+	}
 }

@@ -36,4 +36,16 @@
 			</if>
 		)
 	</insert>
+	
+	<select id="getBaord" parameterType="int" resultType="board">
+		select *
+		from web5_board
+		where boardnum = #{boardnum}
+	</select>
+	
+	<update id="hitBoard" parameterType="int">
+		update web5_board
+		set hits = hits + 1
+		where boardnum = #{boardnum}
+	</update>
 </mapper>

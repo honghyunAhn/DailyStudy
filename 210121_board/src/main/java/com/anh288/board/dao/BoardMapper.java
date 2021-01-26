@@ -12,4 +12,8 @@ public interface BoardMapper {
 
 	public void insertBoard(BoardVO board);
 
+	public BoardVO getBaord(int boardnum);
+
+	public void hitBoard(int boardnum);
+
 }
