@@ -38,7 +38,15 @@
 	</insert>
 	
 	<select id="getBaord" parameterType="int" resultType="board">
-		select *
+		select
+			boardnum
+			, id
+			, title
+			, contents
+			, to_char(inputdate, 'YYYY-MM-DD HH24:MI:SS') inputdate
+			, hits
+			, originalfile
+			, savedfile "savedfiles"
 		from web5_board
 		where boardnum = #{boardnum}
 	</select>

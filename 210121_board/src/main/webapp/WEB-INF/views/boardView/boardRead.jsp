@@ -7,6 +7,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="../resources/css/default.css">
+<script type="text/javascript">
+function delteCheck(boardnum){
+	if(confirm("정말 삭제하시겠습니까?")){
+		location.href = "delte?boardnum=" + boardnum;
+	}
+}
+</script>
 </head>
 <body>
 	<div class="centerdiv">
