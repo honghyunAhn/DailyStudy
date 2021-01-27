@@ -56,4 +56,13 @@
 		set hits = hits + 1
 		where boardnum = #{boardnum}
 	</update>
+	
+	<delete id="delBoard" parameterType="board">
+		delete
+		from
+			web5_board
+		where
+			boardnum = #{boardnum}
+			and id = #{id}
+</delete>
 </mapper>

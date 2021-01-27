@@ -10,6 +10,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.anh288.board.HomeController;
 import com.anh288.board.dao.BoardDAO;
 import com.anh288.board.util.FileService;
 import com.anh288.board.vo.BoardVO;
@@ -29,6 +32,7 @@ public class BoardController {
 	@Autowired
 	BoardDAO dao;
 	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	final String uploadPath = "/boardfile";
 	
 	@RequestMapping(value="list", method=RequestMethod.GET)
@@ -65,6 +69,7 @@ public class BoardController {
 		model.addAttribute("board", board);
 		return "boardView/boardRead";
 	}
+	
 	@RequestMapping(value = "download", method = RequestMethod.GET)
 	public String fileDownload(int boardnum, Model model, HttpServletResponse response) {
 		BoardVO board = dao.getBoard(boardnum);
@@ -96,7 +101,26 @@ public class BoardController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		return null;
+	}
+	
+	@RequestMapping(value="delete", method=RequestMethod.GET)
+	public String boardDelete(int boardnum, Model model, HttpSession session) {
+		String id = (String) session.getAttribute("loginId");
+		logger.debug(id);
+		BoardVO board = new BoardVO();
+		logger.debug("board : {}",board);
+		board.setId(id);
+		
+		String savedfile = dao.getBoard(boardnum).getSavedfiles();
+		
+		int res = dao.delBoard(board);
+		
+		if(res == 1 && savedfile != null) {
+			FileService.deleteFile(uploadPath + "/" + savedfile);
+		}
+		model.addAttribute("res", res);
+		
+		return "redirect:boardlist";
 	}
 }

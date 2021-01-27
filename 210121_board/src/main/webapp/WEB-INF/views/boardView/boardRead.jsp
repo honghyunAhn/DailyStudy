@@ -8,9 +8,9 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="../resources/css/default.css">
 <script type="text/javascript">
-function delteCheck(boardnum){
+function deleteCheck(boardnum){
 	if(confirm("정말 삭제하시겠습니까?")){
-		location.href = "delte?boardnum=" + boardnum;
+		location.href = 'delete?boardnum=' + boardnum;
 	}
 }
 </script>
