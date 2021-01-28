@@ -107,9 +107,8 @@ public class BoardController {
 	@RequestMapping(value="delete", method=RequestMethod.GET)
 	public String boardDelete(int boardnum, Model model, HttpSession session) {
 		String id = (String) session.getAttribute("loginId");
-		logger.debug(id);
 		BoardVO board = new BoardVO();
-		logger.debug("board : {}",board);
+		board.setBoardnum(boardnum);
 		board.setId(id);
 		
 		String savedfile = dao.getBoard(boardnum).getSavedfiles();
@@ -121,6 +120,6 @@ public class BoardController {
 		}
 		model.addAttribute("res", res);
 		
-		return "redirect:boardlist";
+		return "redirect:list";
 	}
 }

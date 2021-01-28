@@ -65,7 +65,7 @@ public class BoardDAO {
 		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
 		int res = 0;
 		try {
-			mapper.delBoard(board);
+			res = mapper.delBoard(board);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

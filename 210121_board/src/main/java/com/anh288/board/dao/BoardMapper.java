@@ -16,6 +16,6 @@ public interface BoardMapper {
 
 	public void hitBoard(int boardnum);
 
-	public void delBoard(BoardVO board);
+	public int delBoard(BoardVO board);
 
 }
