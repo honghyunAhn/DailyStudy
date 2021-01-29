@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Board Read</title>
 <link rel="stylesheet" href="../resources/css/default.css">
 <script type="text/javascript">
 function deleteCheck(boardnum){

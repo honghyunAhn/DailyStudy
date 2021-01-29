@@ -122,4 +122,9 @@ public class BoardController {
 		
 		return "redirect:list";
 	}
+	
+	@RequestMapping(value="edit", method=RequestMethod.GET)
+	public String boardEdit(int boardnum, Model model, HttpSession session) {
+		return "boardView/boardEdit";
+	}
 }
