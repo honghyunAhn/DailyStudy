@@ -3,12 +3,9 @@ package com.anh288.board.dao;
 import java.util.ArrayList;
 
 import org.apache.ibatis.session.SqlSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.anh288.board.HomeController;
 import com.anh288.board.vo.BoardVO;
 
 @Repository
@@ -70,5 +67,16 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		return res;
+	}
+
+	public int editBoard(BoardVO board) {
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		int result = 0;
+		try {
+			result = mapper.editBoard(board);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

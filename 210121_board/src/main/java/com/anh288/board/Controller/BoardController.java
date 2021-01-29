@@ -124,7 +124,35 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="edit", method=RequestMethod.GET)
-	public String boardEdit(int boardnum, Model model, HttpSession session) {
+	public String boardEdit(int boardnum, Model model) {
+		BoardVO board = dao.getBoard(boardnum);
+		model.addAttribute("board",board);
 		return "boardView/boardEdit";
+	}
+	
+	@RequestMapping(value="edit", method=RequestMethod.POST)
+	public String boardEdit(BoardVO board, Model model,MultipartFile upload, HttpSession session) {
+		String id = (String) session.getAttribute("loginId");
+		BoardVO oldBoard = dao.getBoard(board.getBoardnum());
+		if(oldBoard == null || !oldBoard.getId().equals(id)) {
+			return "redirect:list";
+		}
+		board.setId(id);
+		logger.debug("Board : {}", board);
+		
+		if(!upload.isEmpty()) {
+			String savedfile = oldBoard.getSavedfiles();
+			
+			if(savedfile != null) {
+				FileService.deleteFile(uploadPath + "/" + savedfile);
+			}
+			savedfile = FileService.saveFile(upload, uploadPath);
+			
+			board.setOriginalfile(upload.getOriginalFilename());
+			board.setSavedfiles(savedfile);
+		}
+		int result = dao.editBoard(board);
+		model.addAttribute("result", result);
+		return "redirect:read?boardnum=" + board.getBoardnum();
 	}
 }

@@ -18,4 +18,5 @@ public interface BoardMapper {
 
 	public int delBoard(BoardVO board);
 
+	public int editBoard(BoardVO board);
 }

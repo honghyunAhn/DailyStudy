@@ -58,6 +58,7 @@ function deleteCheck(boardnum){
 			<a href="javascript:deleteCheck(${board.boardnum})">삭제</a>
 			<a href="edit?boardnum=${board.boardnum}">수정</a>
 		</c:if>
+		<a href="list">목록보기</a>
 		</div>
 	</div>
 </body>

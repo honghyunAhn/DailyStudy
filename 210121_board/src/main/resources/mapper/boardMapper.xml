@@ -64,5 +64,19 @@
 		where
 			boardnum = #{boardnum}
 			and id = #{id}
-</delete>
+	</delete>
+	
+	<update id="editBoard" parameterType="board">
+		update web5_board
+		set
+			title = #{title}
+			, contents = #{contents}
+			<if test="originalfile != null and savedfiles != null">
+			, originalfile = #{originalfile}
+			, savedfile = #{savedfiles}
+			</if>
+		where
+			boardnum = #{boardnum}
+			and id = #{id}
+	</update>
 </mapper>
