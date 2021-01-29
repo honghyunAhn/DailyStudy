@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.anh288.board.vo.BoardVO;
+import com.anh288.board.vo.ReplyVO;
 
 @Repository
 public class BoardDAO {
@@ -74,6 +75,17 @@ public class BoardDAO {
 		int result = 0;
 		try {
 			result = mapper.editBoard(board);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int insertReply(ReplyVO reply) {
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		int result = 0;
+		try {
+			result = mapper.insertReply(reply);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

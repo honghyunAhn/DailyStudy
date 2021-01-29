@@ -28,4 +28,16 @@
 		where
 			id = #{id}
 	</update>
+	
+	<insert id="insertReply" parameterType="reply">
+		insert into
+			web5_reply
+		values(
+			#{replynum}
+			, #{boardnum}
+			, #{id}
+			, #{text}
+			, #{inputdate}
+		)
+	</insert>
 </mapper>

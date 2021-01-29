@@ -79,4 +79,19 @@
 			boardnum = #{boardnum}
 			and id = #{id}
 	</update>
+	
+	<insert id="insertReply" parameterType="reply">
+		insert into web5_reply (
+		replynum
+		, boardnum
+		, id
+		, text
+		)
+		values (
+			web5_reply_seq.nextval
+			, #{boardnum}
+			, #{id}
+			, #{text}
+		)
+	</insert>
 </mapper>

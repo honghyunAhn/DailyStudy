@@ -24,6 +24,7 @@ import com.anh288.board.HomeController;
 import com.anh288.board.dao.BoardDAO;
 import com.anh288.board.util.FileService;
 import com.anh288.board.vo.BoardVO;
+import com.anh288.board.vo.ReplyVO;
 
 @Controller
 @RequestMapping("board")
@@ -154,5 +155,14 @@ public class BoardController {
 		int result = dao.editBoard(board);
 		model.addAttribute("result", result);
 		return "redirect:read?boardnum=" + board.getBoardnum();
+	}
+	@RequestMapping(value="replyWrite", method=RequestMethod.POST)
+	public String replyWrite(ReplyVO reply, Model model, HttpSession session) {
+		String id = (String) session.getAttribute("loginId");
+		reply.setId(id);
+		int result = dao.insertReply(reply);
+		logger.debug("result : {}", result);
+		model.addAttribute("result", result);
+		return "redirect:read?boardnum=" + reply.getBoardnum();
 	}
 }

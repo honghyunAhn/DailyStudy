@@ -5,6 +5,7 @@
 	<typeAliases>
 		<typeAlias type="com.anh288.board.vo.MemberVO" alias="member"/>
 		<typeAlias type="com.anh288.board.vo.BoardVO" alias="board" />
+		<typeAlias type="com.anh288.board.vo.ReplyVO" alias="reply" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />
