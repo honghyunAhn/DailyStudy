@@ -94,4 +94,12 @@
 			, #{text}
 		)
 	</insert>
+	
+	<select id="getReply" parameterType="int" resultType="reply">
+		select *
+		from web5_reply
+		where boardnum = #{boardnum}
+		order by
+			replynum desc
+	</select>
 </mapper>

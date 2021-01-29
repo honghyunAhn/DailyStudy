@@ -67,6 +67,8 @@ public class BoardController {
 	@RequestMapping(value="read", method=RequestMethod.GET)
 	public String boardRead(int boardnum, Model model) {
 		BoardVO board = dao.getBoard(boardnum);
+		ArrayList<ReplyVO> replylist = dao.getReply(boardnum);
+		model.addAttribute("replylist", replylist);
 		model.addAttribute("board", board);
 		return "boardView/boardRead";
 	}

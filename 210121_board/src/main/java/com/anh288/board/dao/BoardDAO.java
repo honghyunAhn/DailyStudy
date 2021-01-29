@@ -91,4 +91,15 @@ public class BoardDAO {
 		}
 		return result;
 	}
+
+	public ArrayList<ReplyVO> getReply(int boardnum) {
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		ArrayList<ReplyVO> replylist = null;
+		try {
+			replylist = mapper.getReply(boardnum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return replylist;
+	}
 }

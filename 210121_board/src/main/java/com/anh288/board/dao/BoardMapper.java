@@ -22,4 +22,6 @@ public interface BoardMapper {
 	public int editBoard(BoardVO board);
 
 	public int insertReply(ReplyVO reply);
+
+	public ArrayList<ReplyVO> getReply(int boardnum);
 }
