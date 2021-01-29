@@ -102,4 +102,21 @@
 		order by
 			replynum desc
 	</select>
+	
+	<update id="replyEdit" parameterType="reply">
+		update web5_reply
+		set
+			text = #{text}
+		where
+			replynum = #{replynum}
+			and id = #{id}
+	</update>
+	
+	<delete id="replyDelete" parameterType="reply">
+		delete
+		from web5_reply
+		where
+			replynum = #{replynum}
+			and id = #{id}
+	</delete>
 </mapper>

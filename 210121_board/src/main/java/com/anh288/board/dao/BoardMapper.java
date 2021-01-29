@@ -24,4 +24,8 @@ public interface BoardMapper {
 	public int insertReply(ReplyVO reply);
 
 	public ArrayList<ReplyVO> getReply(int boardnum);
+
+	public int replyEdit(ReplyVO reply);
+
+	public int replyDelete(ReplyVO reply);
 }

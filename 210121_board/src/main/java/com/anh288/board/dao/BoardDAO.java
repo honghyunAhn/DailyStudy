@@ -102,4 +102,26 @@ public class BoardDAO {
 		}
 		return replylist;
 	}
+
+	public int replyEdit(ReplyVO reply) {
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		int result = 0;
+		try {
+			result = mapper.replyEdit(reply);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int replyDelete(ReplyVO reply) {
+		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		int result = 0;
+		try {
+			result = mapper.replyDelete(reply);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

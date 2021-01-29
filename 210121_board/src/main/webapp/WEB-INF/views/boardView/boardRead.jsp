@@ -13,6 +13,7 @@ function deleteCheck(boardnum){
 		location.href = 'delete?boardnum=' + boardnum;
 	}
 }
+
 function replyFormCheck() {
 	var retext = document.getElementById('retext');
 	if (retext.value.length < 5) {
@@ -22,6 +23,38 @@ function replyFormCheck() {
 		return false;
 	}
 	return true;			
+}
+
+function replyEditForm(replynum, boardnum, retext){
+	var div = document.getElementById("div"+replynum);
+	
+	var str = '<form name="editForm' + replynum + '" action="replyEdit" method="post">';
+	str += '<input type="hidden" name="replynum" value="'+replynum+'">';
+	str += '<input type="hidden" name="boardnum" value="'+boardnum+'">';
+	str += '&nbsp;';
+	str += '<input type="text" name="text" value="' + retext + '" style="width:530px;">';
+	str += '&nbsp;';
+	str += '<a href="javascript:replyEdit(document.editForm' + replynum + ')">[저장]</a>';
+	str += '&nbsp;';
+	str += '<a href="javascript:replyEditCancle(document.getElementById(\'div' + replynum + '\'))">[취소]</a>';
+	str += '</form>';
+	div.innerHTML = str;
+}
+
+function replyEditCancle(div){
+	div.innerHTML = '';
+}
+
+function replyEdit(form) {
+	if(confirm('수정된 내용을 저장하시겠습니까?')){
+		form.submit();
+	}
+}
+	
+function replyDelete(replynum, boardnum) {
+	if (confirm('리플을 삭제하시겠습니까?')) {
+		location.href='replyDelete?replynum=' + replynum + '&boardnum=' + boardnum;
+	}
 }
 </script>
 	

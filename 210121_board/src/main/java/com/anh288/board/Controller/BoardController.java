@@ -158,12 +158,30 @@ public class BoardController {
 		model.addAttribute("result", result);
 		return "redirect:read?boardnum=" + board.getBoardnum();
 	}
+	
 	@RequestMapping(value="replyWrite", method=RequestMethod.POST)
 	public String replyWrite(ReplyVO reply, Model model, HttpSession session) {
 		String id = (String) session.getAttribute("loginId");
 		reply.setId(id);
 		int result = dao.insertReply(reply);
-		logger.debug("result : {}", result);
+		model.addAttribute("result", result);
+		return "redirect:read?boardnum=" + reply.getBoardnum();
+	}
+	
+	@RequestMapping(value="replyEdit", method=RequestMethod.POST)
+	public String replyEdit(ReplyVO reply, Model model, HttpSession session) {
+		String id = (String) session.getAttribute("loginId");
+		reply.setId(id);
+		int result = dao.replyEdit(reply);
+		model.addAttribute("result", result);
+		return "redirect:read?boardnum=" + reply.getBoardnum();
+	}
+	
+	@RequestMapping(value="replyDelete", method=RequestMethod.GET)
+	public String replyDelete(ReplyVO reply, Model model, HttpSession session) {
+		String id = (String) session.getAttribute("loginId");
+		reply.setId(id);
+		int result = dao.replyDelete(reply);
 		model.addAttribute("result", result);
 		return "redirect:read?boardnum=" + reply.getBoardnum();
 	}
