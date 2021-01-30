@@ -18,29 +18,37 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.anh288.board.HomeController;
 import com.anh288.board.dao.BoardDAO;
 import com.anh288.board.util.FileService;
+import com.anh288.board.util.PageNavigator;
 import com.anh288.board.vo.BoardVO;
 import com.anh288.board.vo.ReplyVO;
 
 @Controller
 @RequestMapping("board")
 public class BoardController {
-
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired
 	BoardDAO dao;
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	final int countPerPage = 10;
+	final int pagePerGroup = 5;
 	final String uploadPath = "/boardfile";
 	
 	@RequestMapping(value="list", method=RequestMethod.GET)
-	public String boardlist(Model model) {
-		ArrayList<BoardVO> boardlist = dao.listBoard();
-		int count = dao.countlist();
+	public String boardlist(@RequestParam(value="page", defaultValue="1") int page, @RequestParam(value="searchText", defaultValue="") String searchText, Model model) {
+		int count = dao.countlist(searchText);
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, count); 
+		
+		ArrayList<BoardVO> boardlist = dao.listBoard(searchText, navi.getStartRecord(), navi.getCountPerPage());
+		
 		model.addAttribute("boardlist",boardlist);
+		model.addAttribute("navi", navi);
 		model.addAttribute("count", count);
 		return "boardView/boardlist";
 	}

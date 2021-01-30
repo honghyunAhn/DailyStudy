@@ -2,14 +2,16 @@ package com.anh288.board.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
+
 import com.anh288.board.vo.BoardVO;
 import com.anh288.board.vo.ReplyVO;
 
 public interface BoardMapper {
 
-	public ArrayList<BoardVO> boardlist();
+	public ArrayList<BoardVO> boardlist(String searchText, RowBounds rb);
 
-	public int countBoard();
+	public int countBoard(String searchText);
 
 	public void insertBoard(BoardVO board);
 

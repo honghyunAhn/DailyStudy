@@ -2,6 +2,7 @@ package com.anh288.board.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,22 +16,23 @@ public class BoardDAO {
 	@Autowired
 	SqlSession sqlSession;
 
-	public ArrayList<BoardVO> listBoard() {
+	public ArrayList<BoardVO> listBoard(String searchText, int startRecord, int countPerPage) {
 		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
+		RowBounds rb = new RowBounds(startRecord, countPerPage);
 		ArrayList<BoardVO> list = null;
 		try {
-			list = mapper.boardlist();
+			list = mapper.boardlist(searchText, rb);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
 
-	public int countlist() {
+	public int countlist(String searchText) {
 		BoardMapper mapper = sqlSession.getMapper(BoardMapper.class);
 		int res = 0;
 		try {
-			res = mapper.countBoard();
+			res = mapper.countBoard(searchText);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
