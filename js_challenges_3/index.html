@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vanilla Challenge</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="src/style.css">
+  </head>
+  <body>
+    <h1>Random Number Game</h1>
+    
+    <form id="random-form">
+        <h2>Generate a number between 0 and <input class="numInput" type="text"></input></h2>
+        <h3>Guess the number: <input type="text"></input> <button type="submit">Play!</button></h3>
+    </form> 
+
+    <div id="comparison" class="hidden">
+        <h3>You chose: <span id="choseNum"></span>, the machine chose: <span id="machine"></span>.</h3>
+    </div>
+    <h3 id="result"></h3>
+    <script src="src/index.js"></script>
+  </body>
+</html>

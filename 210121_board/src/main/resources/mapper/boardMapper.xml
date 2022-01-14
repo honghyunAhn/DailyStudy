@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anh288.board.dao.BoardMapper">
+	
+	<select id="boardlist" resultType="board">
+		select *
+		from web5_board
+		<if test="_parameter != null">
+		where 
+			title like '%' || #{searchText} || '%'
+		</if>
+		order by boardnum desc
+	</select>
+	
+	<select id="countBoard" parameterType="string" resultType="int">
+		select count(*)
+		from web5_board
+		<if test="_parameter != null">
+		where 
+			title like '%' || #{searchText} || '%'
+		</if>
+	</select>
+	
+	<insert id="insertBoard" parameterType="board">
+		insert into
+			web5_board
+		(
+			boardnum,
+			id,
+			title,
+			contents
+			<if test="originalfile != null and savedfiles != null">
+			, originalfile
+			, savedfile
+			</if>		
+		)
+		values
+		(
+			web5_board_seq.nextval,
+			#{id},
+			#{title},
+			#{contents}
+			<if test="originalfile != null and savedfiles != null">
+			, #{originalfile}
+			, #{savedfiles}
+			</if>
+		)
+	</insert>
+	
+	<select id="getBaord" parameterType="int" resultType="board">
+		select
+			boardnum
+			, id
+			, title
+			, contents
+			, to_char(inputdate, 'YYYY-MM-DD HH24:MI:SS') inputdate
+			, hits
+			, originalfile
+			, savedfile "savedfiles"
+		from web5_board
+		where boardnum = #{boardnum}
+	</select>
+	
+	<update id="hitBoard" parameterType="int">
+		update web5_board
+		set hits = hits + 1
+		where boardnum = #{boardnum}
+	</update>
+	
+	<delete id="delBoard" parameterType="board">
+		delete
+		from
+			web5_board
+		where
+			boardnum = #{boardnum}
+			and id = #{id}
+	</delete>
+	
+	<update id="editBoard" parameterType="board">
+		update web5_board
+		set
+			title = #{title}
+			, contents = #{contents}
+			<if test="originalfile != null and savedfiles != null">
+			, originalfile = #{originalfile}
+			, savedfile = #{savedfiles}
+			</if>
+		where
+			boardnum = #{boardnum}
+			and id = #{id}
+	</update>
+	
+	<insert id="insertReply" parameterType="reply">
+		insert into web5_reply (
+		replynum
+		, boardnum
+		, id
+		, text
+		)
+		values (
+			web5_reply_seq.nextval
+			, #{boardnum}
+			, #{id}
+			, #{text}
+		)
+	</insert>
+	
+	<select id="getReply" parameterType="int" resultType="reply">
+		select *
+		from web5_reply
+		where boardnum = #{boardnum}
+		order by
+			replynum desc
+	</select>
+	
+	<update id="replyEdit" parameterType="reply">
+		update web5_reply
+		set
+			text = #{text}
+		where
+			replynum = #{replynum}
+			and id = #{id}
+	</update>
+	
+	<delete id="replyDelete" parameterType="reply">
+		delete
+		from web5_reply
+		where
+			replynum = #{replynum}
+			and id = #{id}
+	</delete>
+</mapper>

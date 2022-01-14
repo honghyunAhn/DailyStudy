@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.anh288.board.dao.MemberMapper">
+
+	<insert id="insertMember" parameterType="member">
+		insert into 
+			web5_member 
+		values 
+			(#{id}, #{password}, #{name}, #{phone}, #{address}, #{email})
+	</insert>
+
+	<select id="getMember" parameterType="String" resultType="member">
+		select *
+		from web5_member
+		where id = #{searchId}
+	</select>
+	
+	<update id="updateMember" parameterType="member">
+		update
+			web5_member
+		set
+			password = #{password}
+			, name = #{name}
+			, phone = #{phone}
+			, address = #{address}
+			, email = #{email}
+		where
+			id = #{id}
+	</update>
+	
+	<insert id="insertReply" parameterType="reply">
+		insert into
+			web5_reply
+		values(
+			#{replynum}
+			, #{boardnum}
+			, #{id}
+			, #{text}
+			, #{inputdate}
+		)
+	</insert>
+</mapper>
