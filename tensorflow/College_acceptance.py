@@ -16,7 +16,7 @@ x = []
 for i, rows in data.iterrows(): #data라는 데이터프레일을 가로 한줄씩 출력
     #print(rows['gre']) #gre 세로 열에 있는 데이터 출력
     x.append([rows['gre'], rows['gpa'], rows['rank']])
-
+            #     영어성적       학점         학교랭킹
 import numpy as np
 import tensorflow as tf
 
