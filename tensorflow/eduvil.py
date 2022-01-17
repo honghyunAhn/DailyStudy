@@ -5,6 +5,7 @@ import pandas as pd
 
 data = pd.read_excel('aaa.xlsx')
 tmp = []
+list = []
 result = []
 
 for i, rows in data.iterrows():
@@ -13,7 +14,7 @@ for i, rows in data.iterrows():
                 rows['Unnamed: 6'],rows['Unnamed: 8'],rows['Unnamed: 9'],
                 rows['Unnamed: 10'],rows['Unnamed: 11'],rows['Unnamed: 12'],
                 rows['Unnamed: 13'],rows['Unnamed: 14']])
-count = 0
+
 for i in tmp:
     flag = True
     for j in i:
@@ -21,8 +22,19 @@ for i in tmp:
             flag = False
             break
     if flag == True:
-        result.append(i)
-        count += 1
+        list.append(i)
         
-print("count", count)
+for i in list:
+    flag = True
+    num = 0
+    for j in i:
+        if type(j) == int or type(j) == float:
+            num += j
+    if flag == True:
+        result.append([i[0],num/(len(i)-1)])
+        
+# print(result)
+# print("count", count)
+
 print(result)
+
