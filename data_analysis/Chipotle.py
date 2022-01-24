@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 
 file_path = "../../../data/chipotle.tsv"
@@ -29,3 +31,23 @@ chipo['item_name'].value_counts()  # 각 항목의 개수 출력
 item_count = chipo['item_name'].value_counts()[:10]
 for idx, (val, cnt) in enumerate(item_count.iteritems(), 1):
     print("top", idx, ":", val, cnt)
+
+chipo['item_name'].value_counts().index.tolist()[0]
+
+# item당 주문 개수를 출력합니다.
+order_count = chipo.groupby('item_name')['order_id'].count()
+order_count[:10]  # item당 주문 개수를 출력합니다.
+
+# item당 주문 총량을 출력합니다.
+item_quantity = chipo.groupby('item_name')['quantity'].sum()
+item_quantity[:10]  # item당 주문 총량을 출력합니다.
+
+item_name_list = item_quantity.index.tolist()
+x_pos = np.arange(len(item_name_list))
+order_cnt = item_quantity.values.tolist()
+
+plt.bar(x_pos, order_cnt, align="center")
+plt.ylabel('ordered_item_count')
+plt.title('Distribution if all orderd item')
+
+plt.show()
