@@ -51,3 +51,29 @@ plt.ylabel('ordered_item_count')
 plt.title('Distribution if all orderd item')
 
 plt.show()
+
+
+# 주문당 평균 계산금액을 출력합니다.
+chipo.groupby('order_id')['item_price'].sum().mean()
+
+# 한 주문에 10달러 이상 사용한 id를 출력합니다.
+chipo_orderid_group = chipo.groupby('order_id').sum()
+results = chipo_orderid_group[chipo_orderid_group.item_price >= 10]
+
+print(results[:10])
+print(results.index.values)
+
+# 각 아이템의 가격을 계산합니다.
+chipo_one_item = chipo[chipo.quantity == 1]
+price_per_item = chipo_one_item.groupby('item_name').min()
+price_per_item.sort_values(by='item_price', ascending=False)[:10]
+# 아이템 가격 분포 그래프를 출력합니다.
+itme_name_list = price_per_item.index.tolist()
+x_pos = np.arange(len(item_name_list))
+item_price = price_per_item['item_price'].tolist()
+
+plt.bar(x_pos, item_price, align='center')
+plt.ylabel('item price($)')
+plt.title('Distribution of item price')
+
+plt.show()
