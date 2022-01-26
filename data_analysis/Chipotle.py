@@ -77,3 +77,22 @@ plt.ylabel('item price($)')
 plt.title('Distribution of item price')
 
 plt.show()
+
+# 아이템 가격 히스토그램을 출력합니다.
+plt.hist(item_price)
+plt.ylabel('counts')
+plt.title('Hisogram of item price')
+
+plt.show()
+
+# 가장 비싼 주문에서 item이 총 맻개 팔렸는지를 계산합니다.
+chipo.groupby('order_id').sum().sort_values(
+    by='item_price', ascending=False)[:5]
+
+# "Veggie Salad Bowl" 이 몇 번 주문되었는지를 계산합니다.
+chipo_salad = chipo[chipo['item_name'] == "Veggie Salad Bowl"]
+# 한 주문 내에서 중복 집계된 item_name을 제거합니다.
+chipo_salad = chipo_salad.drop_duplicates(['item_name', 'order_id'])
+
+print(len(chipo_salad))
+chipo_salad.head(5)
