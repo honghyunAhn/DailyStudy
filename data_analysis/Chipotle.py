@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-file_path = "../../../data/chipotle.tsv"
+file_path = "./data/chipotle.tsv"
 chipo = pd.read_csv(file_path, sep='\t')
 
 # chipo 라는 Dataframe에서 순서대로 10개의 row 데이터를 보여줍니다.
