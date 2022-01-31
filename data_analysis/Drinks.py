@@ -1,3 +1,4 @@
+import seaborn as sns
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,3 +22,19 @@ cols = ['beer_servings', 'spirit_servings',
         'wine_servings', 'total_litres_of_pure_alcohol']
 corr = drinks[cols].corr(method='pearson')
 print(corr)
+
+
+# corr 행렬 히트맵을 시각화합니다.
+cols_view = ['beer', 'spirit', 'wine', 'alcohol']  # 그래프 출력을 위한 cols 이름을 축약합니다.
+sns.set(font_scale=1.5)
+hm = sns.heatmap(corr.values,
+                 cbar=True,
+                 annot=True,
+                 square=True,
+                 fmt='.2f',
+                 annot_kws={'size': 15},
+                 yticklabels=cols_view,
+                 xticklabels=cols_view)
+
+plt.tight_layout()
+plt.show()
