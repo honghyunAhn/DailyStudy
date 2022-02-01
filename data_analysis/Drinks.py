@@ -44,3 +44,13 @@ sns.set(style='whitegrid', context='notebook')
 sns.pairplot(drinks[['beer_servings', 'spirit_servings',
                      'wine_servings', 'total_litres_of_pure_alcohol']], height=2.5)
 plt.show()
+
+print(drinks.isnull().sum())
+print("-------------------------------------")
+print(drinks.dtypes)
+
+# 결측데이터를 처리합니다 : 기타 대륙으로 통합 -> 'OT'
+drinks['continent'] = drinks['continent'].fillna('OT')
+# fillna함수 비어있는 값을 괄호안에있는 값으로 채워줌
+
+drinks['continent'].isnull().sum()
