@@ -38,3 +38,9 @@ hm = sns.heatmap(corr.values,
 
 plt.tight_layout()
 plt.show()
+
+# 시각화 라이브러리를 이용한 피처간의 scatter plot을 출력합니다.
+sns.set(style='whitegrid', context='notebook')
+sns.pairplot(drinks[['beer_servings', 'spirit_servings',
+                     'wine_servings', 'total_litres_of_pure_alcohol']], height=2.5)
+plt.show()
