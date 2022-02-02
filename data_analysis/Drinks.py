@@ -54,3 +54,13 @@ drinks['continent'] = drinks['continent'].fillna('OT')
 # fillna함수 비어있는 값을 괄호안에있는 값으로 채워줌
 
 drinks['continent'].isnull().sum()
+
+drinks['continent'].value_counts()
+
+labels = drinks['continent'].value_counts().index.tolist()
+fracs1 = drinks['continent'].value_counts().values.tolist()
+explode = (0, 0, 0, 0.25, 0, 0)
+
+plt.pie(fracs1, explode=explode, labels=labels, autopct='%.0f%%', shadow=True)
+plt.title('null data to \'OT\'')
+plt.show()
