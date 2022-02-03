@@ -64,3 +64,25 @@ explode = (0, 0, 0, 0.25, 0, 0)
 plt.pie(fracs1, explode=explode, labels=labels, autopct='%.0f%%', shadow=True)
 plt.title('null data to \'OT\'')
 plt.show()
+
+drinks['continent'].value_counts().index.tolist()
+
+drinks['continent'].value_counts().values.tolist()
+
+# 대륙별 spirit_servings의 평균, 최소, 최대, 합계를 계산합니다.
+result = drinks.groupby('continent').spirit_servings.agg(
+    ['mean', 'min', 'max', 'sum'])
+result.head()
+# agg함수는 그룹으로 묶어서 원하는 데이터를 얻을 수 있다
+
+# 전체 평균보다 많은 알코올을 섭취하는 대륙을 구합니다.
+total_mean = drinks.total_litres_of_pure_alcohol.mean()
+continent_mean = drinks.groupby(
+    'continent')['total_litres_of_pure_alcohol'].mean()
+continent_over_mean = continent_mean[continent_mean >= total_mean]
+print(continent_over_mean)
+
+# 평균 bear_servings이 가장 높은 대륙을 구합니다.
+beer_continent = drinks.groupby('continent').beer_servings.mean().idxmax()
+# idxmax() 가장 값이 큰 값을 구하겠다
+print(beer_continent)
