@@ -115,3 +115,21 @@ rects4 = plt.bar(index + bar_width * 3, sums, bar_width,
 plt.xticks(index, result.index.tolist())
 plt.legend()
 plt.show()
+
+
+# 대륙별 total_litres_of_pure_alcohol을 시각화합니다.
+continents = continent_mean.index.tolist()
+continents.append('mean')
+x_pos = np.arange(len(continents))
+alcohol = continent_mean.tolist()
+alcohol.append(total_mean)
+
+bar_list = plt.bar(x_pos, alcohol, align='center', alpha=0.5)
+bar_list[len(continents) - 1].set_color('r')
+plt.plot([0., 6], [total_mean, total_mean], "k--")
+plt.xticks(x_pos, continents)
+
+plt.ylabel('total_litres_of_pure_alcohol')
+plt.title('total_litres_of_pure_alcohol by Continent')
+
+plt.show()
