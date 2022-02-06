@@ -133,3 +133,17 @@ plt.ylabel('total_litres_of_pure_alcohol')
 plt.title('total_litres_of_pure_alcohol by Continent')
 
 plt.show()
+
+# 대륙별 beer_servings을 시각화합니다.
+beer_group = drinks.groupby('continent')['beer_servings'].sum()
+continents = beer_group.index.tolist()
+y_pos = np.arange(len(continents))
+alcohol = beer_group.tolist()
+
+bar_list = plt.bar(y_pos, alcohol, align='center', alpha=0.5)
+bar_list[continents.index("EU")].set_color('r')
+plt.xticks(y_pos, continents)
+plt.ylabel('beer_servings')
+plt.title('beer_servings by Continent')
+
+plt.show()
