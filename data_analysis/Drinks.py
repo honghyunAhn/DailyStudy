@@ -1,3 +1,4 @@
+from scipy import stats
 import seaborn as sns
 import pandas as pd
 import numpy as np
@@ -192,3 +193,32 @@ plt.ylabel('total_litres_of_pure_alcohol')
 plt.title('total_litres_of_pure_alcohol by Continent')
 
 plt.show()
+
+
+# 아프리카와 유럽간의 맥주 소비량 차이를 검정합니다.
+africa = drinks.loc[drinks['continent'] == 'AF']
+europe = drinks.loc[drinks['continent'] == 'EU']
+
+
+tTestResult = stats.ttest_ind(africa['beer_servings'], europe['beer_servings'])
+tTestResultDiffVar = stats.ttest_ind(
+    africa['beer_servings'], europe['beer_servings'], equal_var=False)
+
+print("The t-statistic and p-value assuming equal variances is %.3f and %.3f." % tTestResult)
+print("The t-statistic and p-value not assuming equal variances is %.3f and %.3f" %
+      tTestResultDiffVar)
+
+# total_servings 피처를 생성합니다.
+drinks['total_servings'] = drinks['beer_servings'] + \
+    drinks['wine_servings'] + drinks['spirit_servings']
+
+# 술 소비량 대비 알콜 비율 피처를 생성합니다.
+drinks['alcohol_rate'] = drinks['total_litres_of_pure_alcohol'] / \
+    drinks['total_servings']
+drinks['alcohol_rate'] = drinks['alcohol_rate'].fillna(0)
+
+# 순위 정보를 생성합니다.
+country_with_rank = drinks[['country', 'alcohol_rate']]
+country_with_rank = country_with_rank.sort_values(
+    by=['alcohol_rate'], ascending=0)
+country_with_rank.head(5)
