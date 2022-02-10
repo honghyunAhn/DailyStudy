@@ -244,3 +244,17 @@ plt.annotate('South Korea : ' + str(korea_rank + 1),
              arrowprops=dict(facecolor='red', shrink=0.05))
 
 plt.show()
+
+
+# 대륙별 평균 wine_servings 피처를 만들어서 병합합니다.
+result = drinks.groupby('continent').mean()['wine_servings']
+df = result.to_frame().reset_index()
+df = df.rename(columns={'wine_servings': 'wine_servings_cont_avg'})
+drinks = pd.merge(drinks, df, on='continent', how='outer')
+
+# 위와 같은 방법의 코드입니다.
+drinks['wine_servings_cont_avg'] = drinks.groupby(
+    'continent')['wine_servings'].transform(np.mean)
+
+# 결과를 출력합니다.
+drinks[['country', 'continent', 'wine_servings_cont_avg']].sample(5).head()
