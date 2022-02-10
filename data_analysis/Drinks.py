@@ -222,3 +222,25 @@ country_with_rank = drinks[['country', 'alcohol_rate']]
 country_with_rank = country_with_rank.sort_values(
     by=['alcohol_rate'], ascending=0)
 country_with_rank.head(5)
+
+
+# 국가별 순위 정보를 그래프로 시각화합니다.
+country_list = country_with_rank.country.tolist()
+x_pos = np.arange(len(country_list))
+rank = country_with_rank.alcohol_rate.tolist()
+
+bar_list = plt.bar(x_pos, rank)
+bar_list[country_list.index("South Korea")].set_color('r')
+plt.ylabel('alcohol rate')
+plt.title('liquor drink rank by contry')
+plt.axis([0, 200, 0, 0.3])
+
+korea_rank = country_list.index("South Korea")
+korea_alc_rate = country_with_rank[country_with_rank['country']
+                                   == 'South Korea']['alcohol_rate'].values[0]
+plt.annotate('South Korea : ' + str(korea_rank + 1),
+             xy=(korea_rank, korea_alc_rate),
+             xytext=(korea_rank + 10, korea_alc_rate + 0.05),
+             arrowprops=dict(facecolor='red', shrink=0.05))
+
+plt.show()
