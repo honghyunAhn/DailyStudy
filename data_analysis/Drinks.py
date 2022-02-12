@@ -258,3 +258,26 @@ drinks['wine_servings_cont_avg'] = drinks.groupby(
 
 # 결과를 출력합니다.
 drinks[['country', 'continent', 'wine_servings_cont_avg']].sample(5).head()
+
+# 국가별 total_servings 피처를 만들어서 병합합니다.
+drinks['total_servings'] = drinks['beer_servings'] + \
+    drinks['wine_servings'] + drinks['spirit_servings']
+
+# 결과를 출력합니다.
+drinks[['country', 'beer_servings', 'wine_servings',
+        'spirit_servings', 'total_servings']].sample(5).head()
+
+# 전체 평균보다 적은 알코올을 섭취하는 대륙 중에서, spirit을 가장 많이 마시는 국가를 구합니다.
+total_mean = drinks.total_litres_of_pure_alcohol.mean()
+continent_mean = drinks.groupby(
+    'continent').total_litres_of_pure_alcohol.mean()
+continent_under_mean = continent_mean[continent_mean <=
+                                      total_mean].index.tolist()
+df_continent_under_mean = drinks.loc[drinks.continent.isin(
+    continent_under_mean)]
+
+most_spirit_under_mean = df_continent_under_mean.loc[df_continent_under_mean['spirit_servings'].idxmax(
+)]
+
+# 결과를 출력합니다.
+most_spirit_under_mean['country']
