@@ -281,3 +281,22 @@ most_spirit_under_mean = df_continent_under_mean.loc[df_continent_under_mean['sp
 
 # 결과를 출력합니다.
 most_spirit_under_mean['country']
+
+# 술 소비량 대비 알콜 비율에 대한 칼럼을 만들어서 병합합니다.
+drinks['alcohol_rate'] = drinks['total_litres_of_pure_alcohol'] / \
+    drinks['total_servings']
+drinks['alcohol_rate'] = drinks['alcohol_rate'].fillna(0)
+
+# 술 소비량 대비 알콜 비율 : 전체 순위 중 한국의 순위를 구합니다.
+drinks['alcohol_rate_rank'] = drinks['alcohol_rate'].rank(ascending=False)
+drinks['alcohol_rate_rank'] = drinks['alcohol_rate_rank'].apply(np.floor)
+drinks.loc[drinks['country'] == 'South Korea'].alcohol_rate_rank
+
+# 대륙별 술 소비량 대비 알콜 비율을 구합니다.
+continent_sum = drinks.groupby('continent').sum()
+continent_sum['alcohol_rate_continent'] = continent_sum['total_litres_of_pure_alcohol'] / \
+    continent_sum['total_servings']
+continent_sum = continent_sum.reset_index()
+continent_sum = continent_sum[['continent', 'alcohol_rate_continent']]
+
+drinks = pd.merge(drinks, continent_sum, on='continent', how='outer')
