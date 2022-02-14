@@ -5,7 +5,7 @@ from pandas.io.parsers import read_csv
 
 model = tf.global_variables_initializer()
 
-data = read_csv('test.csv', sep=',')
+data = read_csv('eduvil_3d.csv', sep=',')
 
 xy = np.array(data, dtype=np.float32)
 
