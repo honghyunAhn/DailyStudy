@@ -63,7 +63,7 @@ for sido in sido_nm.find_elements_by_tag_name('option'):
             
             # 최종합불 선택
             for rlt_final in browser.find_elements_by_name("rlt_final"):
-                browser.execute_script("arguments[0].click();", rlt_final)
+                browser.execute_script("arguments[0].click();", rlt_final) 
                 # scrbtn이 지정 될 때까지 대기 -> 지정 대기 시간이 지날경우 TimeoutException이 발생할 경우 타임아웃 출력 후 다음 작업 진행
                 try: 
                     elem =  WebDriverWait(browser, 100).until(
@@ -71,7 +71,7 @@ for sido in sido_nm.find_elements_by_tag_name('option'):
                     )
                     browser.execute_script("arguments[0].click();", browser.find_element_by_id("srchbtn"))
                 except TimeoutException:
-                    print("타임아웃")
+                    print("지역 : ", sido.text, ", 학교: ", univ.text, ", 계열 : ", mojip.text,  " --- 타임아웃")
                     
                 # 페이지 선택
                 page_len = len(browser.find_elements_by_xpath("/html/body/div[2]/div[2]/div[2]/div/div[4]/ul/li/a"))
