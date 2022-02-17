@@ -12,6 +12,10 @@ PATH = "./chromedriver.exe"
 
 options = webdriver.ChromeOptions()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
+options.headless = True
+options.add_argument("window-size=1920x1080")
+options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36")
+
 browser = webdriver.Chrome(PATH, options=options)
 browser.maximize_window() 
 res = requests.get(URL)
@@ -63,8 +67,7 @@ for sido in sido_nm.find_elements_by_tag_name('option'):
             
             # 최종합불 선택
             for rlt_final in browser.find_elements_by_name("rlt_final"):
-                browser.execute_script("arguments[0].click();", rlt_final) 
-                # scrbtn이 지정 될 때까지 대기 -> 지정 대기 시간이 지날경우 TimeoutException이 발생할 경우 타임아웃 출력 후 다음 작업 진행
+                browser.execute_script("arguments[0].click();", rlt_final)
                 try: 
                     elem =  WebDriverWait(browser, 100).until(
                             EC.presence_of_element_located((By.ID, "srchbtn"))
