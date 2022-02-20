@@ -21,3 +21,11 @@ auth.set_access_token(ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET)
 
 # twitter API를 사용하기 위한 준비입니다.
 api = tweepy.API(auth)
+
+keyword = "베이징"
+tweets = api.search_tweets(keyword)
+for tweet in tweets:
+    print(tweet.text)
+    print(tweet.entities['user_mentions'])
+    print(tweet.entities['hashtags'])
+    print(tweet.created_at)
