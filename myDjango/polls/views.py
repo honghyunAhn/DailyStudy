@@ -4,6 +4,7 @@ from django.template import loader
 
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
 from django.shortcuts import get_object_or_404, render
 
 from .models import Choice, Qusetion
@@ -11,7 +12,8 @@ from .models import Choice, Qusetion
 
 def index(request):
     # return HttpResponse("Hello, world.")
-    latest_question_list = Qusetion.objects.order_by("-pub_date")[:5]
+    latest_question_list = Qusetion.objects.filter(pub_date__lte=timezone.now()
+    ).order_by('-pub_date')[:5]
     template = loader.get_template('polls/index.html')
     context = {
         'latest_question_list' : latest_question_list,
