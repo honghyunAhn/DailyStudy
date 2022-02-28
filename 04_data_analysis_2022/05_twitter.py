@@ -1,3 +1,6 @@
+from collections import Counter
+from konlpy.tag import Okt
+import re
 import tweepy
 import pandas as pd
 import numpy as np
@@ -48,3 +51,45 @@ for tweet in searched_tweets:
     series = pd.Series(row, index=df.columns)
     df = df.append(series, ignore_index=True)
 df.to_csv("tweet_temp.csv", index=False)
+
+df = pd.read_csv("tweet_temp.csv")
+df.head()
+
+
+# 텍스트 정제 함수 : 한글 이외의 문자는 전부 제거합니다.
+
+def text_cleaning(text):
+    hangul = re.compile('[^ ㄱ-ㅣ가-힣]+')  # 한글의 정규표현식을 나타냅니다.
+    result = hangul.sub('', text)
+    return result
+
+
+# 'tweet_text' 피처에 이를 적용합니다.
+df['ko_text'] = df['tweet_text'].apply(lambda x: text_cleaning(x))
+df.head()
+
+
+# 한국어 약식 불용어 사전 예시 파일입니다. 출처 - (https://www.ranks.nl/stopwords/korean)
+korean_stopwords_path = "./data/korean_stopwords.txt"
+with open(korean_stopwords_path, encoding='utf8') as f:
+    stopwords = f.readlines()
+stopwords = [x.strip() for x in stopwords]
+
+
+def get_nouns(x):
+    nouns_tagger = Okt()
+    nouns = nouns_tagger.nouns(x)
+
+    # 한글자 키워드를 제가합니다.
+    nouns = [noun for noun in nouns if len(noun) > 1]
+
+    # 불용어를 제거합니다.
+    nouns = [noun for noun in nouns if noun not in stopwords]
+
+    return nouns
+
+
+# 'ko_text' 피처에 이를 적용합니다.
+df['nouns'] = df['ko_text'].apply(lambda x: get_nouns(x))
+print(df.shape)
+df.head()
