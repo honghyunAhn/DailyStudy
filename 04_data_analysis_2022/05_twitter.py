@@ -1,3 +1,4 @@
+from apyori import apriori
 from collections import Counter
 from konlpy.tag import Okt
 import re
@@ -93,3 +94,23 @@ def get_nouns(x):
 df['nouns'] = df['ko_text'].apply(lambda x: get_nouns(x))
 print(df.shape)
 df.head()
+
+
+# 장바구니 형태의 데이터(트랜잭션 데이터)를 생성합니다.
+transactions = [
+    ['베이징', '올림픽'],
+    ['베이징', '태극기'],
+    ['베이징', '올림픽', '차준']
+]
+
+# 연관 분석을 수행합니다.
+results = list(apriori(transactions))
+for result in results:
+    print(result)
+
+# 지지도 0.5, 신뢰도 0.6, 향상도 1.0 이상이면서 (베이징, 올림픽) 처럼 규칙의 크기가 2 이하인 규칙을 추출합니다.
+list(apriori(transactions,
+             min_support=0.5,
+             min_cnfidence=0.6,
+             min_lift=1.0,
+             max_length=2))
