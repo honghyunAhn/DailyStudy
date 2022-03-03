@@ -114,3 +114,32 @@ list(apriori(transactions,
              min_cnfidence=0.6,
              min_lift=1.0,
              max_length=2))
+
+# 트랜잭션 데이터를 추출합니다.
+transactions = df['nouns'].tolist()
+# 공백 문자열을 방지합니다.
+transactions = [transaction for transaction in transactions if transaction]
+print(transactions)
+
+# 연관 분석을 수행합니다.
+results = list(apriori(transactions,
+                       min_support=0.05,
+                       min_confidence=0.1,
+                       min_lift=4,
+                       max_length=2))
+print(results)
+
+# 데이터 프레임 형태로 정리합니다.
+columns = ['source', 'target', 'support']
+netowrk_df = pd.DataFrame(columns=columns)
+
+
+# 규칙의 조건절을 source, 결과절을 target, 지지도를 support 라는 데이터 프레임의 피처로 변환합니다.
+for result in results:
+    if len(result.items) == 2:
+        items = [x for x in result.items]
+        row = [items[0], items[1], result.support]
+        series = pd.Series(row, index=network_df.columns)
+        network_df = network_df.append(series, ignore_index=True)
+
+network_df.head()
