@@ -143,3 +143,17 @@ for result in results:
         network_df = network_df.append(series, ignore_index=True)
 
 network_df.head()
+
+# 말뭉치를 추출합니다.
+tweet_corpus = "".join(df['ko_text'].tolist())
+print(tweet_corpus)
+
+
+# 명사 키워드를 추출합니다.
+nouns_tagger = Okt()
+nouns = nouns_tagger.nouns(tweet_corpus)
+count = Counter(nouns)
+
+# 한글자 키워드를 제거합니다.
+remove_char_counter = Counter({x: count[x] for x in count if len(x) > 1})
+print(remove_char_counter)
