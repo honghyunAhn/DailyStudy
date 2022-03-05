@@ -157,3 +157,10 @@ count = Counter(nouns)
 # 한글자 키워드를 제거합니다.
 remove_char_counter = Counter({x: count[x] for x in count if len(x) > 1})
 print(remove_char_counter)
+
+# 키워드와 키워드 빈도 점수를 ‘node’, ‘nodesize’ 라는 데이터 프레임의 피처로 생성합니다.
+node_df = pd.DataFrame(remove_char_counter.items(),
+                       columns=['node', 'nodesize'])
+# 시각화의 편의를 위해 ‘nodesize’ 50 이하는 제거합니다.
+node_df = node_df[node_df['nodesize'] >= 50]
+node_df.head()
