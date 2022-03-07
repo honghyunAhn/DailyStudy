@@ -1,3 +1,4 @@
+import networkx as nx
 from apyori import apriori
 from collections import Counter
 from konlpy.tag import Okt
@@ -165,29 +166,27 @@ node_df = pd.DataFrame(remove_char_counter.items(),
 node_df = node_df[node_df['nodesize'] >= 50]
 node_df.head()
 
+plt.figure(figsize=(25, 25))
 
-warnings.filterwarnings("ignore")
+# networkx 그래프 객체를 생성합니다.
+G = nx.Graph()
 
+# node_df의 키워드 빈도수를 데이터로 하여, 네트워크 그래프의 ‘노드’ 역할을 하는 원을 생성합니다.
+for index, row in node_df.iterrows():
+    G.add_node(row['node'], nodesize=row['nodesize'])
 
-# 발급 완료된 키를 {your_key} 대신 입력합니다.
-CONSUMER_KEY = "GjHiCcHz8h439twifLIDmgbSj"
-CONSUMER_SECRET = "Sb8hCHeRiEnu1vEryv1anedsKiQNZyLVCjMw1DIhOUbeA0WwAI"
-ACCESS_TOKEN_KEY = "1491344148519354372-oANvjTcI4SFXrZa5hWv8uRGJaUBEO3"
-ACCESS_TOKEN_SECRET = "ZJjdZw87ISr6hZ38g7SB1fdj8elH86AZoy30YdP3eOOFl"
+# network_df의 연관 분석 데이터를 기반으로, 네트워크 그래프의 ‘관계’ 역할을 하는 선을 생성합니다.
+for index, row in network_df.iterrows():
+    G.add_weighted_edges_from([(row['source'], row['target'], row['support'])])
 
-# 개인정보 인증을 요청하는 Handler입니다.
-auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+# 그래프 디자인과 관련된 파라미터를 설정합니다.
+pos = nx.spring_layout(G, k=0.6, iterations=50)
+sizes = [G.nodes[node]['nodesize']*25 for node in G]
+nx.draw(G, pos=pos, node_size=sizes)
 
-# 인증 요청을 수행합니다.
-auth.set_access_token(ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET)
+# Windows 사용자는 AppleGothic 대신,'Malgun Gothic'. 그 외 OS는 OS에서 한글을 지원하는 기본 폰트를 입력합니다.
+nx.draw_networkx_labels(G, pos=pos, font_family='Malgun Gothic', font_size=25)
 
-# twitter API를 사용하기 위한 준비입니다.
-api = tweepy.API(auth)
-
-keyword = "베이징"
-tweets = api.search_tweets(keyword)
-for tweet in tweets:
-    print(tweet.text)
-    print(tweet.entities['user_mentions'])
-    print(tweet.entities['hashtags'])
-    print(tweet.created_at)
+# 그래프를 출력합니다.
+ax = plt.gca()
+plt.show()
