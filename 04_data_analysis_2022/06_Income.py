@@ -25,3 +25,5 @@ mpl.rc('font', family='NanumGothicOTF')
 
 picher['연봉(2018)'].describe()
 picher['연봉(2018)'].hist(bins=100)  # 2018년 연봉 분포를 출력합니다.
+
+picher.boxplot(column=['연봉(2018)'])  # 연봉의 Boxplot을 출력합니다.
