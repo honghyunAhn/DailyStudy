@@ -27,3 +27,24 @@ picher['연봉(2018)'].describe()
 picher['연봉(2018)'].hist(bins=100)  # 2018년 연봉 분포를 출력합니다.
 
 picher.boxplot(column=['연봉(2018)'])  # 연봉의 Boxplot을 출력합니다.
+
+picher_features_df = picher[['승', '패', '세', '홀드', '블론', '경기', '선발', '이닝', '삼진/9',
+                             '볼넷/9', '홈런/9', 'BABIP', 'LOB%', 'ERA', 'RA9-WAR', 'FIP', 'kFIP', 'WAR',
+                             '연봉(2018)', '연봉(2017)']]
+
+# 피처 각각에 대한 histogram을 출력합니다.
+
+
+def plot_hist_each_column(df):
+    plt.rcParams['figure.figsize'] = [20, 16]
+    fig = plt.figure(1)
+
+    # df의 column 갯수 만큼의 subplot을 출력합니다.
+    for i in range(len(df.columns)):
+        ax = fig.add_subplot(5, 5, i+1)
+        plt.hist(df[df.columns[i]], bins=50)
+        ax.set_title(df.columns[i])
+    plt.show()
+
+
+plot_hist_each_column(picher_features_df)
