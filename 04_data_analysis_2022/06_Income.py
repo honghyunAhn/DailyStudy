@@ -48,3 +48,25 @@ def plot_hist_each_column(df):
 
 
 plot_hist_each_column(picher_features_df)
+
+# pandas 형태로 정의된 데이터를 출력할 때, scientific-notation이 아닌 float 모양으로 출력되게 해줍니다.
+pd.options.mode.chained_assignment = None
+
+# 피처 각각에 대한 scaling을 수행하는 함수를 정의합니다.
+
+
+def standard_scaling(df, scale_columns):
+    for col in scale_columns:
+        series_mean = df[col].mean()
+        series_std = df[col].std()
+        df[col] = df[col].apply(lambda x: (x-series_mean)/series_std)
+    return df
+
+
+# 피처 각각에 대한 scaling을 수행합니다.
+scale_columns = ['승', '패', '세', '홀드', '블론', '경기', '선발', '이닝', '삼진/9',
+                 '볼넷/9', '홈런/9', 'BABIP', 'LOB%', 'ERA', 'RA9-WAR', 'FIP', 'kFIP', 'WAR', '연봉(2017)']
+picher_df = standard_scaling(picher, scale_columns)
+
+picher_df = picher_df.rename(columns={'연봉(2018)': 'y'})
+picher_df.head(5)
