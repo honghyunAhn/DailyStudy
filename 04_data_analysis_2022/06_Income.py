@@ -70,3 +70,12 @@ picher_df = standard_scaling(picher, scale_columns)
 
 picher_df = picher_df.rename(columns={'연봉(2018)': 'y'})
 picher_df.head(5)
+
+# 팀명 피처를 one-hot encoding으로 변환합니다.
+team_encoding = pd.get_dummies(picher_df['팀명'])
+picher_df = picher_df.drop('팀명', axis=1)
+picher_df = picher_df.join(team_encoding)
+
+team_encoding.head(5)
+
+picher_df.head()
