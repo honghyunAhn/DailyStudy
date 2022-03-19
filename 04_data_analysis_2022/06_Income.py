@@ -1,3 +1,7 @@
+from math import sqrt
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
+from sklearn import linear_model
 import matplotlib as mpl
 import pandas as pd
 import numpy as np
@@ -79,3 +83,19 @@ picher_df = picher_df.join(team_encoding)
 team_encoding.head(5)
 
 picher_df.head()
+
+
+# 학습 데이터와 테스트 데이터로 분리합니다.
+X = picher_df[picher_df.columns.difference(['선수명', 'y'])]
+y = picher_df['y']
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=19)
+
+# 회귀 분석 계수를 학습합니다 (회귀 모델 학습)
+lr = linear_model.LinearRegression()
+model = lr.fit(X_train, y_train)
+
+# 학습된 계수를 출력합니다.
+print(lr.coef_)
+
+picher_df.columns
