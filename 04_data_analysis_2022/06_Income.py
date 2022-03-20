@@ -1,3 +1,4 @@
+import statsmodels.api as sm
 from math import sqrt
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
@@ -99,3 +100,27 @@ model = lr.fit(X_train, y_train)
 print(lr.coef_)
 
 picher_df.columns
+
+
+# statsmodel 라이브러리로 회귀 분석을 수행합니다.
+X_train = sm.add_constant(X_train)
+model = sm.OLS(y_train, X_train).fit()
+model.summary()
+
+# 한글 출력을 위한 사전 설정 단계입니다.
+mpl.rc('font', family='AppleGothic')
+plt.rcParams['figure.figsize'] = [20, 16]
+
+# 회귀 계수를 리스트로 반환합니다.
+coefs = model.params.tolist()
+coefs_series = pd.Series(coefs)
+
+# 변수명을 리스트로 반환합니다.
+x_labels = model.params.index.tolist()
+
+# 회귀 계수를 출력합니다.
+ax = coefs_series.plot(kind='bar')
+ax.set_title('feature_coef_graph')
+ax.set_xlabel('x_features')
+ax.set_ylabel('coef')
+ax.set_xticklabels(x_labels)
