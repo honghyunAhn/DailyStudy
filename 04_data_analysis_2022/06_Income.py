@@ -138,3 +138,11 @@ model = lr.fit(X_train, y_train)
 # 회귀 분석 모델을 평가합니다.
 print(model.score(X_train, y_train))  # train R2 score를 출력합니다.
 print(model.score(X_test, y_test))  # test R2 score를 출력합니다.
+
+# 회귀 분석 모델을 평가합니다.
+y_predictions = lr.predict(X_train)
+# train RMSE score를 출력합니다.
+print(sqrt(mean_squared_error(y_train, y_predictions)))
+y_predictions = lr.predict(X_test)
+# test RMSE score를 출력합니다.
+print(sqrt(mean_squared_error(y_test, y_predictions)))
