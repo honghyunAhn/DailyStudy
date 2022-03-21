@@ -124,3 +124,17 @@ ax.set_title('feature_coef_graph')
 ax.set_xlabel('x_features')
 ax.set_ylabel('coef')
 ax.set_xticklabels(x_labels)
+
+# 학습 데이터와 테스트 데이터로 분리합니다.
+X = picher_df[picher_df.columns.difference(['선수명', 'y'])]
+y = picher_df['y']
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=19)
+
+# 회귀 분석 모델을 학습합니다.
+lr = linear_model.LinearRegression()
+model = lr.fit(X_train, y_train)
+
+# 회귀 분석 모델을 평가합니다.
+print(model.score(X_train, y_train))  # train R2 score를 출력합니다.
+print(model.score(X_test, y_test))  # test R2 score를 출력합니다.
