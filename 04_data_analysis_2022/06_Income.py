@@ -1,3 +1,4 @@
+import seaborn as sns
 import statsmodels.api as sm
 from math import sqrt
 from sklearn.metrics import mean_squared_error
@@ -146,3 +147,25 @@ print(sqrt(mean_squared_error(y_train, y_predictions)))
 y_predictions = lr.predict(X_test)
 # test RMSE score를 출력합니다.
 print(sqrt(mean_squared_error(y_test, y_predictions)))
+
+
+# 피처간의 상관계수 행렬을 계산합니다.
+corr = picher_df[scale_columns].corr(method='pearson')
+show_cols = ['win', 'lose', 'save', 'hold', 'blon', 'match', 'start',
+             'inning', 'strike3', 'ball4', 'homerun', 'BABIP', 'LOB',
+             'ERA', 'RA9-WAR', 'FIP', 'kFIP', 'WAR', '2017']
+
+# corr 행렬 히트맵을 시각화합니다.
+plt.rc('font', family='NanumGothicOTF')
+sns.set(font_scale=1.5)
+hm = sns.heatmap(corr.values,
+                 cbar=True,
+                 annot=True,
+                 square=True,
+                 fmt='.2f',
+                 annot_kws={'size': 15},
+                 yticklabels=show_cols,
+                 xticklabels=show_cols)
+
+plt.tight_layout()
+plt.show()
