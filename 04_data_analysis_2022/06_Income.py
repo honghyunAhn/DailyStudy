@@ -1,3 +1,4 @@
+from statsmodels.stats.outliers_influence import variance_inflation_factor
 import seaborn as sns
 import statsmodels.api as sm
 from math import sqrt
@@ -169,3 +170,11 @@ hm = sns.heatmap(corr.values,
 
 plt.tight_layout()
 plt.show()
+
+
+# 피처마다의 VIF 계수를 출력합니다.
+vif = pd.DataFrame()
+vif["VIF Factor"] = [variance_inflation_factor(
+    X.values, i) for i in range(X.shape[1])]
+vif["features"] = X.columns
+vif.round(1)
