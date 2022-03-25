@@ -178,3 +178,30 @@ vif["VIF Factor"] = [variance_inflation_factor(
     X.values, i) for i in range(X.shape[1])]
 vif["features"] = X.columns
 vif.round(1)
+
+# 2018년 연봉을 예측하여 데이터프레임의 column으로 생성합니다.
+X = picher_df[['FIP', 'WAR', '볼넷/9', '삼진/9', '연봉(2017)']]
+predict_2018_salary = lr.predict(X)
+picher_df['예측연봉(2018)'] = pd.Series(predict_2018_salary)
+
+# 원래의 데이터 프레임을 다시 로드합니다.
+picher = pd.read_csv(picher_file_path)
+picher = picher[['선수명', '연봉(2017)']]
+
+# 원래의 데이터 프레임에 2018년 연봉 정보를 합칩니다.
+result_df = picher_df.sort_values(by=['y'], ascending=False)
+result_df.drop(['연봉(2017)'], axis=1, inplace=True, errors='ignore')
+result_df = result_df.merge(picher, on=['선수명'], how='left')
+result_df = result_df[['선수명', 'y', '예측연봉(2018)', '연봉(2017)']]
+result_df.columns = ['선수명', '실제연봉(2018)', '예측연봉(2018)', '작년연봉(2017)']
+
+# 재계약하여 연봉이 변화한 선수만을 대상으로 관찰합니다.
+result_df = result_df[result_df['작년연봉(2017)'] != result_df['실제연봉(2018)']]
+result_df = result_df.reset_index()
+result_df = result_df.iloc[:10, :]
+result_df.head(10)
+
+# 선수별 연봉 정보(작년 연봉, 예측 연봉, 실제 연봉)를 bar 그래프로 출력합니다.
+mpl.rc('font', family='NanumGothicOTF')
+result_df.plot(
+    x='선수명', y=['작년연봉(2017)', '예측연봉(2018)', '실제연봉(2018)'], kind="bar")
